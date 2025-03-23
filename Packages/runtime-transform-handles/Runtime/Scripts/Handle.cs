@@ -1,5 +1,7 @@
 ﻿using System;
+using TransformHandles.Utils;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace TransformHandles
 {
@@ -22,12 +24,17 @@ namespace TransformHandles
         public Vector3 positionSnap = Vector3.zero;
         public float rotationSnap;
         public Vector3 scaleSnap = Vector3.zero;
+        
+        [Tooltip("Global scale speed factor (default 2f)")]
+        [SerializeField] private float globalScaleSpeedFactor = 2f;
 
         public Camera handleCamera;
 
         private PositionHandle PositionHandle { get; set; }
         private RotationHandle RotationHandle { get; set; }
         private ScaleHandle ScaleHandle { get; set; }
+
+        internal float GlobalScaleSpeedFactor => globalScaleSpeedFactor;
         
         private static TransformHandleManager Manager => TransformHandleManager.Instance;
         

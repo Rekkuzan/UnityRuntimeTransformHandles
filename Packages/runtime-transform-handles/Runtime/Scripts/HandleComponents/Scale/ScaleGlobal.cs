@@ -20,7 +20,7 @@ namespace TransformHandles
         public override void Interact(Vector3 pPreviousPosition)
         {
             var mouseVector = (Input.mousePosition - pPreviousPosition);
-            var d = (mouseVector.x + mouseVector.y) * Time.deltaTime * 2;
+            var d = (mouseVector.x + mouseVector.y) * Time.deltaTime * ParentHandle.GlobalScaleSpeedFactor;
             delta += d;
             ParentHandle.target.localScale = _startScale + Vector3.Scale(_startScale,_axis) * delta;
             

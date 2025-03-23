@@ -1,7 +1,7 @@
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
-namespace TransformHandles
+namespace TransformHandles.Utils
 {
     public struct PosRotScale
     {
