@@ -1,3 +1,4 @@
+using System;
 using TransformHandles.Utils;
 using UnityEditor;
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace TransformHandles
 		[SerializeField] private int sideCount = 15;
 		[SerializeField] private float radius;
 		[SerializeField] private float thickness;
-
+		[SerializeField] private KeyCode generateHandleKey = KeyCode.K;
 		[SerializeField] private Transform colliderTransform;
 		
 		private MeshCollider _meshCollider;
@@ -25,17 +26,23 @@ namespace TransformHandles
 		private void Start()
 		{
 			UpdateCollider();
+			
+			// If no keyCode set, disable the component for optimization
+			if (generateHandleKey == KeyCode.None)
+			{
+				enabled = false;
+			}
 		}
 		
 		private void Update()
 		{
-			if (Input.GetKeyDown(KeyCode.K))
+			if (Input.GetKeyDown(generateHandleKey))
 			{
 				UpdateCollider();
 			}
 		}
 
-		private void UpdateCollider()
+		private Mesh UpdateCollider()
 		{
 			var newMesh = MeshUtils.CreateTorus(radius, thickness, segmentCount, sideCount);
 			newMesh.name = "torus";
@@ -43,9 +50,14 @@ namespace TransformHandles
 			_meshFilter.sharedMesh = newMesh;
 			_meshCollider.sharedMesh = newMesh;
 			
-			/*
-			AssetDatabase.CreateAsset(newMesh, "Assets/torus.asset");
-			*/
+			return newMesh;
+		}
+
+		[ContextMenu("Generate torus and save to asset")]
+		private void SaveAsset()
+		{
+			var newMesh = UpdateCollider();
+			AssetDatabase.CreateAsset(newMesh, $"Assets/torus_{DateTime.Now:yyyy-dd-M--HH-mm-ss}.asset");
 		}
 	}
 }
