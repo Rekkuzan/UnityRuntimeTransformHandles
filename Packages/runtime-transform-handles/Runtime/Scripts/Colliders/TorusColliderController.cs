@@ -56,6 +56,8 @@ namespace TransformHandles
 		[ContextMenu("Generate torus and save to asset")]
 		private void SaveAsset()
 		{
+			_meshCollider = colliderTransform.GetComponent<MeshCollider>();
+			_meshFilter = colliderTransform.GetComponent<MeshFilter>();
 			var newMesh = UpdateCollider();
 			AssetDatabase.CreateAsset(newMesh, $"Assets/torus_{DateTime.Now:yyyy-dd-M--HH-mm-ss}.asset");
 		}
