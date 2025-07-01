@@ -53,6 +53,7 @@ namespace TransformHandles
 			return newMesh;
 		}
 
+        #if UNITY_EDITOR
 		[ContextMenu("Generate torus and save to asset")]
 		private void SaveAsset()
 		{
@@ -61,5 +62,6 @@ namespace TransformHandles
 			var newMesh = UpdateCollider();
 			AssetDatabase.CreateAsset(newMesh, $"Assets/torus_{DateTime.Now:yyyy-dd-M--HH-mm-ss}.asset");
 		}
+		#endif
 	}
 }
